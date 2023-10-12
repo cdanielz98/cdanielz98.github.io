@@ -11,6 +11,8 @@ I completed these dashboards as part of the Microsoft Power BI Desktop for Busin
 Two parts of one course-based project. </br>
 Based on a database from the "Maven Fuzzy Factory", a company that sell fuzzy toys.</br>
 In this project I have been hired as an eCommerce Data Analyst to analyse and optimise marketing channels, test conversion performance, and measure the impact of new product launches.
+</br>
+</br>
 
 [Maven Fuzzy Factory Part 1(Mid Course Project)](https://github.com/cdanielz98/sql_mavenfuzzy_pt1)
 
