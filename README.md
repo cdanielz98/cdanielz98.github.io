@@ -1,10 +1,12 @@
-# Carmen's Portfolio
+<h1><a href="#">&#x200B;</a>Carmen's Portfolio</h1>
 Welcome to my portfolio. I am an aspiring analyst that has been independently learning data analytical tools through Udemy. Here, I am showcasing my skills in Power BI,
 SQL, and Python.
 
-# Power BI Projects
+<h1><a href="#">&#x200B;</a>Power BI Projects</h1>
 I completed these dashboards as part of the Microsoft Power BI Desktop for Business Intelligence (2023) course.
+
 [Adventure Works PBI Dashboard](https://github.com/cdanielz98/cdanielz98.github.io/blob/main/adventureworks%20report%5B1625%5D.pbix)
+
 [Maven Market PBI Dashboard](https://github.com/cdanielz98/cdanielz98.github.io/blob/main/MavenMarket_Report.pbix)
 
 <h1><a href="#">&#x200B;</a>SQL Projects</h1>
@@ -19,7 +21,7 @@ In this project I have been hired as an eCommerce Data Analyst to analyse and op
 [Maven Fuzzy Factory Part 2(Final Course Project)](https://github.com/cdanielz98/sql_mavenfuzzy_pt2)
 
 <h1><a href="#">&#x200B;</a>Python Projects</h1>
-An independent exploratory analysis into the Titanic database. 
+An independent exploratory analysis into the Titanic database. <br>
 Using pandas, matplotlib, seaborn, and numpy to clean data, explore, and create visualisations.
 <br>
 <br>
