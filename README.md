@@ -14,10 +14,6 @@ Using DAX, power query, and other elements of Power BI, I completed these dashbo
 <br>
 <br>
 
-<h2><a href="#">&#x200B;</a>Power BI Certification</h2>
-
-[Microsoft Power BI Desktop for Business Intelligence (2023)](https://www.udemy.com/certificate/UC-2e405c39-897d-4233-a2c1-87f14be22f21/)
-
 <h1><a href="#">&#x200B;</a>SQL Projects</h1>
 Two parts of one course-based project. <br>
 Based on a database from the "Maven Fuzzy Factory", a company that sell fuzzy toys.<br>
@@ -32,13 +28,6 @@ In this project I have been hired as an eCommerce Data Analyst to analyse and op
 <br>
 <br>
 
-<h2><a href="#">&#x200B;</a>SQL Certification</h2>
-
-[SQL Data Analysis | Learn SQL by Doing](https://www.udemy.com/certificate/UC-366a5df7-0663-4496-8bd3-b92059f4fac5/)
-
-[Advanced SQL: MySQL for Ecommerce & Web Analytics](https://www.udemy.com/certificate/UC-faf429ab-3c8e-4d33-bafb-2fe80ca8e24a/)
-
-
 <h1><a href="#">&#x200B;</a>Python Projects</h1>
 An independent exploratory analysis into the Titanic database. <br>
 Using pandas, matplotlib, seaborn, and numpy to clean data, explore, and create visualisations.
@@ -50,10 +39,14 @@ Using pandas, matplotlib, seaborn, and numpy to clean data, explore, and create 
 <br>
 <br>
 
-<h2><a href="#">&#x200B;</a>Python Certification</h2>
+<h1><a href="#">&#x200B;</a>Certification/h1>
+
+[Microsoft Power BI Desktop for Business Intelligence (2023)](https://www.udemy.com/certificate/UC-2e405c39-897d-4233-a2c1-87f14be22f21/)
+
+[SQL Data Analysis | Learn SQL by Doing](https://www.udemy.com/certificate/UC-366a5df7-0663-4496-8bd3-b92059f4fac5/)
+
+[Advanced SQL: MySQL for Ecommerce & Web Analytics](https://www.udemy.com/certificate/UC-faf429ab-3c8e-4d33-bafb-2fe80ca8e24a/)
 
 [2023 Python Data Analysis & Visualization Masterclass](https://www.udemy.com/certificate/UC-7f8cf51e-9b06-475c-ac3e-680db60885ce/)
 
 [One Week Python](https://www.udemy.com/certificate/UC-90e6efc3-bec3-459c-bd53-efe2b841dcb8/)
-
-
