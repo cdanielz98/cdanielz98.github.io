@@ -11,22 +11,15 @@ Using DAX, power query, and other elements of Power BI, I completed these dashbo
 
 [Maven Market PBI Dashboard](https://github.com/cdanielz98/cdanielz98.github.io/blob/main/MavenMarket_Report.pbix)
 
-<br>
-<br>
-
 <h1><a href="#">&#x200B;</a>SQL Projects</h1>
 Two parts of one course-based project. <br>
 Based on a database from the "Maven Fuzzy Factory", a company that sell fuzzy toys.<br>
 In this project I have been hired as an eCommerce Data Analyst to analyse and optimise marketing channels, test conversion performance, and measure the impact of new product launches.
-<br>
-<br>
 
 [Maven Fuzzy Factory Part 1(Mid Course Project)](https://github.com/cdanielz98/sql_mavenfuzzy_pt1)
 
 [Maven Fuzzy Factory Part 2(Final Course Project)](https://github.com/cdanielz98/sql_mavenfuzzy_pt2)
 
-<br>
-<br>
 
 <h1><a href="#">&#x200B;</a>Python Projects</h1>
 An independent exploratory analysis into the Titanic database. <br>
@@ -36,10 +29,7 @@ Using pandas, matplotlib, seaborn, and numpy to clean data, explore, and create 
 
 [Titanic Exploratory Analysis](https://github.com/cdanielz98/cdanielz98.github.io/blob/main/TitanicExploratoryAnalysis.ipynb)
 
-<br>
-<br>
-
-<h1><a href="#">&#x200B;</a>Certification/h1>
+<h1><a href="#">&#x200B;</a>Certification</h1>
 
 [Microsoft Power BI Desktop for Business Intelligence (2023)](https://www.udemy.com/certificate/UC-2e405c39-897d-4233-a2c1-87f14be22f21/)
 
