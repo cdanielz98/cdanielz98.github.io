@@ -4,6 +4,8 @@ SQL, and Python.
 
 <h1><a href="#">&#x200B;</a>Power BI Projects</h1>
 I completed these dashboards as part of the Microsoft Power BI Desktop for Business Intelligence (2023) course.
+<br>
+<br>
 
 [Adventure Works PBI Dashboard](https://github.com/cdanielz98/cdanielz98.github.io/blob/main/adventureworks%20report%5B1625%5D.pbix)
 
