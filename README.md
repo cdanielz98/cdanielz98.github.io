@@ -3,7 +3,7 @@ Welcome to my portfolio. I am an aspiring analyst that has been independently le
 SQL, and Python.
 
 <h1><a href="#">&#x200B;</a>Power BI Projects</h1>
-I completed these dashboards as part of the Microsoft Power BI Desktop for Business Intelligence (2023) course.
+Using DAX, power query, and other elements of Power BI, I completed these dashboards as part of the Microsoft Power BI Desktop for Business Intelligence (2023) course.
 <br>
 <br>
 
