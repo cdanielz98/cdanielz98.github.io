@@ -1,0 +1,227 @@
+/*
+The Situation: (Dated: 20.03.2015)
+Cindy is close to securing Maven Fuzzy Factory's next round of funding, and she needs your
+help to tell a compelling story to investors. You'll need to pull the relevant data, and help your
+CEO craft a story about a data-driven company that has been producing rapid growth.
+*/
+
+/*
+Task 1:
+First, I'd like to show our volume growth. Can you pull overall session and order volume, trended by
+quarter for the life of the business? Since the most recent quarter is incomplete, you can decide how 
+to handle it.
+*/
+USE mavenfuzzyfactory;
+SELECT 
+	YEAR(DATE(ws.created_at)) AS 'year',
+    QUARTER(DATE(ws.created_at)) AS 'quarter',
+    COUNT(DISTINCT ws.website_session_id) AS 'sessions', 
+    COUNT(DISTINCT o.order_id) AS 'orders'
+FROM website_sessions ws
+	LEFT JOIN orders o 	ON ws.website_session_id = o.website_session_id
+WHERE ws.created_at < '2015-01-01' -- omitted most recent quarter as it was incomplete not to skew data
+GROUP BY 1,2;
+
+/*
+Task 2:
+Next, let's showcase all of our efficiency improvements. I would love to show quarterly figures since
+we launched, for session-to-order conversion rate, revenue per order, and revenue per session.
+*/
+SELECT 
+	YEAR(DATE(ws.created_at)) AS 'year',
+    QUARTER(DATE(ws.created_at)) AS 'quarter',
+    COUNT(DISTINCT o.order_id)/COUNT(DISTINCT ws.website_session_id) AS 'session_order_conv_rate',
+    SUM(o.price_usd)/COUNT(DISTINCT o.order_id) AS 'revenue_per_order',
+    SUM(o.price_usd)/COUNT(DISTINCT ws.website_session_id) AS 'revenue_per_session'
+FROM website_sessions ws
+	LEFT JOIN orders o 	ON ws.website_session_id = o.website_session_id
+WHERE ws.created_at < '2015-01-01' -- omitted most recent quarter as it was incomplete not to skew data
+GROUP BY 1,2;
+
+/*
+Task 3:
+I'd like to show how we've grown specific channels. Could you pull a quarterly view of orders from 
+Gsearch nonbrand, Bsearch nonbrand, brand search overall, organic search, and direct type-in?
+*/
+
+SELECT 
+	YEAR(DATE(ws.created_at)) AS 'year',
+    QUARTER(DATE(ws.created_at)) AS 'quarter',
+    COUNT(DISTINCT o.order_id) AS 'orders',
+    COUNT(DISTINCT CASE WHEN utm_source = 'gsearch' AND utm_campaign = 'nonbrand' THEN o.order_id
+		ELSE NULL END) AS 'gsearch_nonbrand',
+	COUNT(DISTINCT CASE WHEN utm_source = 'bsearch' AND utm_campaign = 'nonbrand' THEN o.order_id
+		ELSE NULL END) AS 'bsearch_nonbrand',
+	COUNT(DISTINCT CASE WHEN utm_campaign = 'brand' THEN o.order_id ELSE NULL END) AS 'brand_overall',
+	COUNT(DISTINCT CASE WHEN utm_source IS NULL AND http_referer IS NOT NULL THEN o.order_id ELSE NULL END) 
+		AS 'organic_search',
+	COUNT(DISTINCT CASE WHEN utm_source IS NULL AND http_referer IS NULL THEN o.order_id ELSE NULL END) 
+		AS 'direct_type_in'
+FROM website_sessions ws
+	LEFT JOIN orders o ON o.website_session_id=ws.website_session_id
+WHERE ws.created_at <'2015-01-01' -- omitted most recent quarter as incomplete not to skew data
+GROUP BY 1,2
+ORDER BY 1,2;
+
+/*
+Task 4:
+Next, let's show the overall session-to-order conversion rate trends for those same channels, by quarter.
+Please also make a note of any periods where we made major improvements or optimizations.
+*/
+
+SELECT 
+	YEAR(DATE(ws.created_at)) AS 'year',
+	QUARTER(DATE(ws.created_at)) AS 'quarter',
+    COUNT(DISTINCT CASE WHEN utm_source = 'gsearch' AND utm_campaign = 'nonbrand' THEN o.order_id
+		ELSE NULL END)/COUNT(DISTINCT CASE WHEN utm_source = 'gsearch' AND utm_campaign = 'nonbrand' THEN ws.website_session_id
+		ELSE NULL END) AS 'gsearch_nonbrand_conv_rt',
+	COUNT(DISTINCT CASE WHEN utm_source = 'bsearch' AND utm_campaign = 'nonbrand' THEN o.order_id
+		ELSE NULL END)/COUNT(DISTINCT CASE WHEN utm_source = 'bsearch' AND utm_campaign = 'nonbrand' THEN ws.website_session_id
+		ELSE NULL END) AS 'bsearch_nonbrand_conv_rt',
+	COUNT(DISTINCT CASE WHEN utm_campaign = 'brand' THEN o.order_id ELSE NULL END)/
+		COUNT(DISTINCT CASE WHEN utm_campaign = 'brand' THEN ws.website_session_id ELSE NULL END)AS 'brand_overall_conv_rt',
+	COUNT(DISTINCT CASE WHEN utm_source IS NULL AND http_referer IS NOT NULL
+		THEN o.order_id ELSE NULL END)/COUNT(DISTINCT CASE WHEN utm_source IS NULL AND http_referer IS NOT NULL
+		THEN ws.website_session_id ELSE NULL END) AS 'organic_search_conv_rt',
+	COUNT(DISTINCT CASE WHEN utm_source IS NULL AND utm_campaign IS NULL AND http_referer IS NULL
+		THEN o.order_id ELSE NULL END)/COUNT(DISTINCT CASE WHEN utm_source IS NULL AND utm_campaign IS NULL AND http_referer IS NULL
+		THEN ws.website_session_id ELSE NULL END) AS 'direct_type_in_conv_rt'
+FROM website_sessions ws
+	LEFT JOIN orders o ON o.website_session_id=ws.website_session_id
+WHERE ws.created_at <'2015-01-01' -- omitted most recent quarter as incomplete not to skew data
+GROUP BY 1,2;
+
+-- Across all channels there has been a steady increase in conversion rate.
+-- Can also see a slight increase in conversion rates across all channels in the first quarter of 2013 
+-- coinciding with the launch of a second product.
+
+/*
+Task 5:
+We've come a long way since the days of selling a single product. Let's pull monthly trending for
+revenue and margin by product, along with total sales and revenue. Not anything you notice about 
+seasonality.
+*/
+
+SELECT 
+	MIN(DATE(created_at)) AS 'monthly_created_at',
+    SUM(CASE WHEN product_id = 1 THEN price_usd ELSE NULL END) AS 'revenue_product_1',
+    SUM(CASE WHEN product_id = 1 THEN price_usd-cogs_usd ELSE NULL END) AS 'margin_product_1',
+    SUM(CASE WHEN product_id = 2 THEN price_usd ELSE NULL END) AS 'revenue_product_2',
+    SUM(CASE WHEN product_id = 2 THEN price_usd-cogs_usd ELSE NULL END) AS 'margin_product_2',
+    SUM(CASE WHEN product_id = 3 THEN price_usd ELSE NULL END) AS 'revenue_product_3',
+    SUM(CASE WHEN product_id = 3 THEN price_usd-cogs_usd ELSE NULL END) AS 'margin_product_3',
+    SUM(CASE WHEN product_id = 4 THEN price_usd ELSE NULL END) AS 'revenue_product_4',
+    SUM(CASE WHEN product_id = 4 THEN price_usd-cogs_usd ELSE NULL END) AS 'margin_product_4',
+    SUM(price_usd) AS 'overall_revenue',
+    SUM(price_usd - cogs_usd) AS 'overall_margin'
+FROM order_items
+WHERE created_at < '2015-03-20' -- date from assignment
+GROUP BY YEAR(created_at), MONTH(created_at);
+
+-- Regarding seasonality, there is a distinct increase in revenue every November and December which could link to
+-- increases in sales during Black Friday and Christmas.
+
+/*
+Task 6:
+Let's dive deeper into the impact of introducing new products. Please pull monthly sessions to the /products page,
+and show how the % of those sessions clicking through another page has changed over time, along with 
+a view of how conversion from /products to placing an order has improved.
+*/
+
+-- First, I created a temporary table identifying pageview_ids for /products.
+CREATE TEMPORARY TABLE products_pageviews
+SELECT
+	website_session_id, 
+    website_pageview_id as 'products_pageview_id', 
+    created_at, 
+    pageview_url
+FROM website_pageviews
+WHERE pageview_url = '/products';
+
+-- Then I created a temporary table to find which sessions clicked on from the /products page.
+CREATE TEMPORARY TABLE next_pageviews
+SELECT
+	pp.website_session_id,
+    pp.products_pageview_id AS 'next_pageview_id',
+    pp.created_at,
+    wp.pageview_url
+FROM products_pageviews pp 
+	LEFT JOIN website_pageviews wp
+		ON pp.website_session_id = wp.website_session_id
+        AND wp.website_pageview_id > pp.products_pageview_id
+WHERE pp.created_at < '2015-03-20'; -- date from assignment
+
+
+SELECT 		
+	MIN(DATE(pp.created_at)) AS 'monthly_created_at',
+    COUNT(DISTINCT CASE WHEN np.pageview_url IS NOT NULL THEN np.next_pageview_id ELSE NULL END) AS 'sessions_clickthrough_to_next_page',
+	COUNT(DISTINCT CASE WHEN np.pageview_url IS NOT NULL THEN np.next_pageview_id ELSE NULL END)/ -- sessions that clicked on from /products
+		COUNT(DISTINCT CASE WHEN pp.pageview_url IS NOT NULL THEN pp.products_pageview_id ELSE NULL END) -- /products pageviews
+        AS 'next_page_clickthrough_rt',
+	COUNT(DISTINCT order_id)/COUNT(DISTINCT pp.website_session_id) AS 'products_to_order_conv_rt'
+FROM products_pageviews pp
+	LEFT JOIN orders o
+		ON pp.website_session_id = o.website_session_id
+	LEFT JOIN next_pageviews np
+		ON pp.website_session_id = np.website_session_id
+GROUP BY 
+	YEAR(pp.created_at), 
+MONTH(pp.created_at);
+
+-- There is a steady increase in sessions clicking through from the products page to another page and products
+-- to order conversion rates over time.
+
+/*
+Task 7:
+We made our 4th product available as a primary product on December 05, 2014 (it was previously only a cross-sell
+item). Could you pull sales data since then, and show how well each product cross-sells from one another?
+*/
+
+-- First I separated out the primary product ids in a temporary table.
+CREATE TEMPORARY TABLE primary_products
+SELECT
+	order_id,
+    primary_product_id,
+    created_at AS ordered_at
+FROM orders
+WHERE created_at BETWEEN '2014-12-05' AND '2015-03-20'; -- dates from the assignment
+  
+
+  SELECT 
+	primary_product_id,
+    COUNT(DISTINCT CASE WHEN cross_sell_product_id = 1 THEN order_id ELSE NULL END)
+		/COUNT(DISTINCT order_id) AS 'x_sell_rt_prod_1',
+    COUNT(DISTINCT CASE WHEN cross_sell_product_id = 2 THEN order_id ELSE NULL END) 
+		/COUNT(DISTINCT order_id) AS 'x_sell_rt_prod_2',
+    COUNT(DISTINCT CASE WHEN cross_sell_product_id= 3 THEN order_id ELSE NULL END) 
+		/COUNT(DISTINCT order_id) AS 'x_sell_rt_prod_3',
+    COUNT(DISTINCT CASE WHEN cross_sell_product_id = 4 THEN order_id ELSE NULL END)
+		/COUNT(DISTINCT order_id) AS 'x_sell_rt_prod_4'
+FROM (
+	SELECT 
+		pp.*,
+		oi.product_id AS cross_sell_product_id
+	FROM primary_products pp						  -- subquery to identify which products are cross sell items
+		LEFT JOIN order_items oi 
+			ON pp.order_id = oi.order_id
+			AND oi.is_primary_item = 0
+	) AS primary_cross_sell
+GROUP BY primary_product_id;
+  
+-- Product 4 had the highest cross selling rate across all other primary products, upon further analysis this may be because
+-- it was cheaper than all other products making it an easy add-on.
+
+/*
+Task 8:
+In addition to telling investors about what we've already achieved, let's show them that we still have plenty of gas in the tank.
+Based on all the analysis you've done, could you share some recommendations and opportunities for us going forward?
+*/
+/*
+As previously mentioned, many users added product 4 on to their orders and it was an effective cross-sell product.
+It may be worth looking into adding similar products that also have lower price points and see if these are effective.
+
+Also the 'gsearch_nonbrand' channel brings in a lot of traffic to the website, it may be worth looking into increasing the
+bids for this channel.
+*/
+
+			
