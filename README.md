@@ -1,3 +1,4 @@
-# cdanielz98.github.io
-Analytics Portfolio
-![test](https://github.com/cdanielz98/cdanielz98.github.io/assets/135237144/1a83e825-f28c-4daf-975a-3fc03b664188)
+# Carmen's Portfolio
+Welcome to my portfolio. I have been independently learning data analytical tools through Udemy. Here, I am showcasing my skills in Power BI,
+SQL, and Python.
+
